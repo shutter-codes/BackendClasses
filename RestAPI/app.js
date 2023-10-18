@@ -9,8 +9,16 @@ const PORT = process.env.PORT || 3000;
 
 
 app.get('/', async(req, res) => {
-    console.log("i am alive");
-    res.send("I am okay")
+    try{
+        const db = await dbConnection();
+        const collection = db.collection('planets');
+
+        const findResult = await collection.find().toArray();
+        console.log(findResult);
+    }
+    catch(error){
+        console.log(error);
+    }
 })
 
 app.use("/api/products",ProductRouter ) 
